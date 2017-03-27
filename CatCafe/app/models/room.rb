@@ -1,13 +1,20 @@
 class Room < ApplicationRecord
 
 	# Find room with id = id
-	def find(int id)
+	def find(id)
 		results = ActiveRecord::Base.connection.execute("SELECT * FROM rooms WHERE (rooms.roomId = " + id + ");" )
 		if results.present?
 			return results.first
 		else
 			return nil
 		end
+	end
+
+	#TODO create and edit should have their respective params
+	def create
+	end
+
+	def edit
 	end
 
 end
