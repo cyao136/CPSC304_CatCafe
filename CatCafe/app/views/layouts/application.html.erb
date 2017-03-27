@@ -1,43 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>CatCafe</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">CatCafe</a>
-			</div>
-			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">Home</a></li>
-				<li><a href="#">Cats</a> <!-- need to link -->
-				<li><a href="#">Bookings</a> <!-- need to link -->
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li> <!-- need to link -->
-				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li> <!-- need to link -->
-			</ul>
-		</div>
-	</nav>
+	<head>
+	  <title>CatCafe</title>
+	  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+	  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+	  <%= csrf_meta_tags %>
+	</head>
+	<body>
+		<div class="container" id="app_header">
+	        <%= render 'layouts/header' %>
+	    </div>
 
-	<div class="container">
-		<div class="jumbotron">
-			<h1>CatCafe</h1>
-			<p>Welcome to CatCafe! At CatCafe we serve coffee, tea, and a variety of baked goods. If you're looking for a quiet place to work, members can book our study rooms. We also support our local humane society by welcoming adoptable cats in our cafe.</p>
-		</div>
-	</div>
+		<%= yield %>
 
-	<div class="container">
-		<a href="#" class="btn btn-info">View Bookings</a> <!-- need to link -->
-		<a href="#" class="btn btn-info">View Cats</a> <!-- need to link -->
-		<a href="#" class="btn btn-info">Login</a> <!-- need to link -->
-		<a href="#" class="btn btn-info">Sign Up</a> <!-- need to link -->
-	</div>
-<%= yield %>
-
-</body>
+		<div class="container" id="app_footer">
+	        <%= render 'layouts/footer' %>
+	    </div>
+	</body>
 </html>
