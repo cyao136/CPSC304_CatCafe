@@ -1,0 +1,10 @@
+<div class="container">
+	<%= form_tag(controller: "member", action: "book_submit", method: "post", class: "form-group") do %>
+		<%= date_field(:member, :day) %>
+		<%= time_field(:start, :end) %>
+		<%= telephone_field(:member, :phone, placeholder: 'Telephone number') %>
+		<%= select_tag(:room_id, options_for_select(@available_rooms)) %>
+
+		<%= submit_tag("Book") %>
+	<% end %>
+</div>
