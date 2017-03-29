@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   post 'member/:id/adopt' => 'member#adopt', as: :adopt
   post 'member/:id/adopt_submit' => 'member#adopt_submit', as: :adopt_submit
 
+  post 'member/:id/book' => 'member#book', as: :book
+  post 'member/:id/book_submit' => 'member#book_submit', as: :book_submit
+
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
