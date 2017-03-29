@@ -5,5 +5,12 @@ class LoginController < ApplicationController
   	redirect_to controller: 'member', action: 'main', id: id
   end
   def sign_up
+  	@firstName = params[:user][:firstname]
+  	@lastName = params[:user][:lastname]
+  	@telephone = params[:user][:telephone]
+  	@email = params[:email]
+  	@password = [:user][:password]
+
+  	User.create(firstName, lastName, telephone, email, password);
   end
 end
