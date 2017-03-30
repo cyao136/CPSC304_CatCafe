@@ -1,8 +1,9 @@
 <div class="container">
 	<%= form_tag(controller: "member", action: "book_submit", method: "post", class: "form-group") do %>
-		<%= date_field(:booking, :day) %> <!-- should it be :booking or :member?? -->
-		<%= time_field(:start, :end) %>
-		<%= telephone_field(:member, :phone, placeholder: 'Telephone number') %>
+		<%= date_field(:booking, :day) %>
+		<%= time_field(:booking, :start) %>
+		<%= time_field(:booking, :end ) %>
+		<%= number_field(:member, :id, placeholder: 'Member ID') %>
 		<%= select_tag(:room_id, options_for_select(@available_rooms)) %>
 
 		<%= submit_tag("Book") %>
@@ -20,7 +21,8 @@
 	<%= form_tag(controller: "booking", action: "edit_booking", method: "post", class: "form-group") do %>
 		<%= number_field(:booking, :bookingID, placeholder: 'Booking ID number') %>
 		<%= date_field(:booking, :day) %> <!-- should it be :booking or :member?? -->
-		<%= time_field(:start, :end) %>
+		<%= time_field(:booking, :start) %>
+		<%= time_field(:booking, :end ) %>
 		<%= select_tag(:room_id, options_for_select(@available_rooms)) %>
 		<%= submit_tag("Edit booking") %>
 	<% end %>
@@ -29,7 +31,7 @@
 
 <div class="container">
 	<%= form_tag(controller: "member", action: "rooms_booked_by", method: "post", class: "form-group") do %>
-		<%= number_field(:member, :memberID, placeholder: 'member ID number') %>
+		<%= number_field(:member, :id, placeholder: 'member ID number') %>
 		<%= submit_tag("Retrieve bookings by memberID") %>
 	<% end %>
 </div>
