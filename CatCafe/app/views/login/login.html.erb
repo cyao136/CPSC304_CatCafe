@@ -7,3 +7,23 @@
 		<%= submit_tag("Login") %>
 	<% end %>
 </div>
+
+<div>
+	<h2>Employee Login</h2>
+	<% if @employee.manager? %>
+		<%= form_tag(controller: "login",  action: "employee_login", method: "post", class: "form-group") do %>
+			<%= number_field(:employee, :id, placeholder:'Employee ID') %>
+			<%= password_field(:employee, :password, placeholder:'Password') %> 
+
+			<%= submit_tag("Login") %>
+		<% end %>
+	<% end %>
+	<% else %>
+		<%= form_tag(controller: "login",  action: "employee_login", method: "post", class: "form-group") do %>
+			<%= number_field(:employee, :id, placeholder:'Employee ID') %>
+			<%= password_field(:employee, :password, placeholder:'Password') %> 
+
+			<%= submit_tag("Login") %>
+		<% end %>
+	<% end %>
+</div>
