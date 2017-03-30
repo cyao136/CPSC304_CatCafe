@@ -11,6 +11,6 @@ class LoginController < ApplicationController
   	@email = params[:email]
   	@password = [:user][:password]
 
-  	User.create(firstName, lastName, telephone, email, password);
+  	Member.create(@firstName, @lastName, @telephone, @email, @password);
   end
 end
