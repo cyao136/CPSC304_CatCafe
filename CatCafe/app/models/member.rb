@@ -32,7 +32,7 @@ class Member < ApplicationRecord
 	def create(mname, phonenum, email, mpassword)
 		results = nil
 		sqlQuery = "INSERT INTO Members (MName, PhoneNum, Email, MPassword) VALUE " 
-		sqlQuery = sqlQuery + "(" mname + "," + phonenum + "," + email + "," + mpassword + ");"
+		sqlQuery = sqlQuery + "(" + mname + "," + phonenum + "," + email + "," + mpassword + ");"
 		begin
   			ActiveRecord::Base.transaction do
 				result = ActiveRecord::Base.connection.execute(sqlQuery)
