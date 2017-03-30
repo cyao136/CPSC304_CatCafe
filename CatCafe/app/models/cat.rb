@@ -1,24 +1,115 @@
 class Cat < ApplicationRecord
 
 	# Find cat with id = id
-	def find(id)
-		results = ActiveRecord::Base.connection.execute("SELECT * FROM cats WHERE (cats.catId = " + id + ");" )
-		if results.present?
-			return results.first
-		else
-			return nil
-		end
-	end
+    def self.findById(id)
+        results = nil
+        sqlQuery = "SELECT * FROM cats WHERE CatID = #{id};"
+        begin
+            ActiveRecord::Base.transaction do
+                results = ActiveRecord::Base.connection.execute(sqlQuery)
+            end
+        rescue Exception => exc
+            return exc;
+        end
+        return results
+    end
 
-	#TODO create and edit should have their respective params
-	def create
-	end
+    # Find cat with name
+    def self.findByName(catname)
+        results = nil
+        sqlQuery = "SELECT * FROM Members WHERE CatName = \'" + catname + "\';"
+        begin
+                ActiveRecord::Base.transaction do
+                    results = ActiveRecord::Base.connection.execute(sqlQuery)
+                end
+        rescue Exception => exc
+            return exc;
+        end
+        return results
+    end
 
-	def edit
-	end
+    #TODO create and edit should have their respective params
+    def self.create(catname, catphotourl, cattype, employeeid)
+        results = nil
+        sqlQuery = "INSERT INTO Cats (CatName, CatPhotoUrl, CatType, EmployeeID) VALUE "
+        sqlQuery = sqlQuery + "(\'" + catname + "\', \'" + catphotourl + "\', \'" + cattype + "\', \'" + employeeid + "\');"
+        begin
+            ActiveRecord::Base.transaction do
+                results = ActiveRecord::Base.connection.execute(sqlQuery)
+            end
+        rescue Exception => exc
+            return exc;
+        end
+        return results
+    end
+
+    def self.edit(id, catname, catphotourl, cattype, employeeid)
+        results = nil
+        addComma = false
+        sqlQuery = "UPDATE Cats SET "
+        if (!catname.nil?)
+            sqlQuery = sqlQuery + "CatName = \'" + catname + "\'"
+            addComma = true
+        end
+        if (!catphotourl.nil?)
+            if (addComma)
+                sqlQuery = sqlQuery + ", "
+            end
+            sqlQuery = sqlQuery + "CatPhotoUrl = \'" + catphotourl + "\'"
+            addComma = true
+        end
+        if (!cattype.nil?)
+            if (addComma)
+                sqlQuery = sqlQuery + ", "
+            end
+            sqlQuery = sqlQuery + "CatType = \'" + cattype + "\'"
+            addComma = true
+        end
+        if (!employeeid.nil?)
+            if (addComma)
+                sqlQuery = sqlQuery + ", "
+            end
+            sqlQuery = sqlQuery + "EmployeeID = \'" + employeeid + "\'"
+            addComma = true
+        end
+        sqlQuery = sqlQuery + " WHERE CatID = #{id};"
+
+        begin
+            ActiveRecord::Base.transaction do
+                results = ActiveRecord::Base.connection.execute(sqlQuery)
+            end
+        rescue Exception => exc
+            return exc;
+        end
+        return results
+    end
+
+    def self.destroy(id)
+        results = nil
+        sqlQuery = "DELETE FROM Cats WHERE CatID = #{id};"
+
+        begin
+            ActiveRecord::Base.transaction do
+                results = ActiveRecord::Base.connection.execute(sqlQuery)
+            end
+        rescue Exception => exc
+            return exc;
+        end
+        return results
+    end
 
 	# Return a list of cats foster by employee with id employeeId
-	def fosteredBy(employeeId)
-	end
+	def self.fosteredBy(employeeid)
+        results = nil
+        sqlQuery = "SELECT * FROM Cats WHERE CatID = #{id};"
 
+        begin
+            ActiveRecord::Base.transaction do
+                results = ActiveRecord::Base.connection.execute(sqlQuery)
+            end
+        rescue Exception => exc
+            return exc;
+        end
+        return results
+	end
 end

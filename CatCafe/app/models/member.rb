@@ -35,7 +35,7 @@ class Member < ApplicationRecord
 		sqlQuery = sqlQuery + "(\'" + mname + "\', \'" + phonenum + "\', \'" + email + "\', \'" + mpassword + "\');"
 		begin
   			ActiveRecord::Base.transaction do
-				result = ActiveRecord::Base.connection.execute(sqlQuery)
+				results = ActiveRecord::Base.connection.execute(sqlQuery)
   			end
  		rescue Exception => exc
    			return exc;
@@ -76,7 +76,7 @@ class Member < ApplicationRecord
 
 		begin  
   			ActiveRecord::Base.transaction do
-				result = ActiveRecord::Base.connection.execute(sqlQuery)
+				results = ActiveRecord::Base.connection.execute(sqlQuery)
   			end
  		rescue Exception => exc
    			return exc;
@@ -90,7 +90,7 @@ class Member < ApplicationRecord
 
 		begin  
   			ActiveRecord::Base.transaction do
-				result = ActiveRecord::Base.connection.execute(sqlQuery)
+				results = ActiveRecord::Base.connection.execute(sqlQuery)
   			end
  		rescue Exception => exc
    			return exc;
