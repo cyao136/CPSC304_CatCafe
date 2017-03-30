@@ -1,9 +1,9 @@
 class Member < ApplicationRecord
 
 	# Find member with id = id
-	def findById(id)
+	def self.findById(id)
 		results = nil
-		sqlQuery = "SELECT * FROM Members WHERE (MemberID = " + id + ");"
+		sqlQuery = "SELECT * FROM Members WHERE MemberID = #{id};"
 		begin  
   			ActiveRecord::Base.transaction do
 				results = ActiveRecord::Base.connection.execute(sqlQuery)
@@ -15,9 +15,9 @@ class Member < ApplicationRecord
 	end
 
 	# Find member with email
-	def findByEmail(email)
+	def self.findByEmail(email)
 		results = nil
-		sqlQuery = "SELECT * FROM Members WHERE (Email = " + email + ");"
+		sqlQuery = "SELECT * FROM Members WHERE Email = \'" + email + "\';"
 		begin  
   			ActiveRecord::Base.transaction do
 				results = ActiveRecord::Base.connection.execute(sqlQuery)
@@ -29,10 +29,10 @@ class Member < ApplicationRecord
 	end
 
 	#TODO create and edit should have their respective params
-	def create(mname, phonenum, email, mpassword)
+	def self.create(mname, phonenum, email, mpassword)
 		results = nil
 		sqlQuery = "INSERT INTO Members (MName, PhoneNum, Email, MPassword) VALUE " 
-		sqlQuery = sqlQuery + "(" + mname + "," + phonenum + "," + email + "," + mpassword + ");"
+		sqlQuery = sqlQuery + "(\'" + mname + "\', \'" + phonenum + "\', \'" + email + "\', \'" + mpassword + "\');"
 		begin
   			ActiveRecord::Base.transaction do
 				result = ActiveRecord::Base.connection.execute(sqlQuery)
@@ -43,22 +43,36 @@ class Member < ApplicationRecord
  		return results
 	end
 
-	def edit(id, mname, phonenum, email, mpassword)
+	def self.edit(id, mname, phonenum, email, mpassword)
 		results = nil
+		addComma = false
 		sqlQuery = "UPDATE Members SET "
 		if (!mname.nil?)
-			sqlQuery = sqlQuery + "MName = \'" + mname + "\', "
+			sqlQuery = sqlQuery + "MName = \'" + mname + "\'"
+			addComma = true
 		end
 		if (!phonenum.nil?)
-			sqlQuery = sqlQuery + "PhoneNum = \'" + phonenum + "\', "
+			if (addComma)
+				sqlQuery = sqlQuery + ", "
+			end
+			sqlQuery = sqlQuery + "PhoneNum = \'" + phonenum + "\'"
+			addComma = true
 		end
 		if (!email.nil?)
-			sqlQuery = sqlQuery + "Email = \'" + email + "\', "
+			if (addComma)
+				sqlQuery = sqlQuery + ", "
+			end
+			sqlQuery = sqlQuery + "Email = \'" + email + "\'"
+			addComma = true
 		end
 		if (!mpassword.nil?)
-			sqlQuery = sqlQuery + "MPassword = \'" + mpassword + "\' "
+			if (addComma)
+				sqlQuery = sqlQuery + ", "
+			end
+			sqlQuery = sqlQuery + "MPassword = \'" + mpassword + "\'"
+			addComma = true
 		end
-		sqlQuery = sqlQuery + "WHERE MemberID = " + id + ";"
+		sqlQuery = sqlQuery + " WHERE MemberID = #{id};"
 
 		begin  
   			ActiveRecord::Base.transaction do
@@ -70,9 +84,9 @@ class Member < ApplicationRecord
  		return results
 	end
 
-	def destroy(id)
+	def self.destroy(id)
 		results = nil
-		sqlQuery = "DELETE FROM Members WHERE MemberID = " + id + ";"
+		sqlQuery = "DELETE FROM Members WHERE MemberID = #{id};"
 
 		begin  
   			ActiveRecord::Base.transaction do
