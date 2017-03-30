@@ -15,9 +15,9 @@ class Member < ApplicationRecord
 	end
 
 	# Find member with email
-	def findByEmail(Email)
+	def findByEmail(email)
 		results = nil
-		sqlQuery = "SELECT * FROM Members WHERE (Email = " + Email + ");"
+		sqlQuery = "SELECT * FROM Members WHERE (Email = " + email + ");"
 		begin  
   			ActiveRecord::Base.transaction do
 				results = ActiveRecord::Base.connection.execute(sqlQuery)
@@ -29,10 +29,10 @@ class Member < ApplicationRecord
 	end
 
 	#TODO create and edit should have their respective params
-	def create(MName, PhoneNum, Email, MPassword)
+	def create(mname, phonenum, email, mpassword)
 		results = nil
 		sqlQuery = "INSERT INTO Members (MName, PhoneNum, Email, MPassword) VALUE " 
-		sqlQuery = sqlQuery + "(" MName + "," + PhoneNum + "," + Email + "," + MPassword + ");"
+		sqlQuery = sqlQuery + "(" mname + "," + phonenum + "," + email + "," + mpassword + ");"
 		begin
   			ActiveRecord::Base.transaction do
 				result = ActiveRecord::Base.connection.execute(sqlQuery)
@@ -43,22 +43,22 @@ class Member < ApplicationRecord
  		return results
 	end
 
-	def edit(MemberID, MName, PhoneNum, Email, MPassword)
+	def edit(id, mname, phonenum, email, mpassword)
 		results = nil
 		sqlQuery = "UPDATE Members SET "
-		if (!MName.nil?)
-			sqlQuery = sqlQuery + "MName = \'" + MName + "\', "
+		if (!mname.nil?)
+			sqlQuery = sqlQuery + "MName = \'" + mname + "\', "
 		end
-		if (!PhoneNum.nil?)
-			sqlQuery = sqlQuery + "PhoneNum = \'" + PhoneNum + "\', "
+		if (!phonenum.nil?)
+			sqlQuery = sqlQuery + "PhoneNum = \'" + phonenum + "\', "
 		end
-		if (!Email.nil?)
-			sqlQuery = sqlQuery + "Email = \'" + Email + "\', "
+		if (!email.nil?)
+			sqlQuery = sqlQuery + "Email = \'" + email + "\', "
 		end
-		if (!MPassword.nil?)
-			sqlQuery = sqlQuery + "MPassword = \'" + MPassword + "\' "
+		if (!mpassword.nil?)
+			sqlQuery = sqlQuery + "MPassword = \'" + mpassword + "\' "
 		end
-		sqlQuery = sqlQuery + "WHERE MemberID = " + MemberID + ";"
+		sqlQuery = sqlQuery + "WHERE MemberID = " + id + ";"
 
 		begin  
   			ActiveRecord::Base.transaction do
@@ -70,9 +70,9 @@ class Member < ApplicationRecord
  		return results
 	end
 
-	def destroy(MemberID)
+	def destroy(id)
 		results = nil
-		sqlQuery = "DELETE FROM Members WHERE MemberID = " + MemberID + ";"
+		sqlQuery = "DELETE FROM Members WHERE MemberID = " + id + ";"
 
 		begin  
   			ActiveRecord::Base.transaction do
