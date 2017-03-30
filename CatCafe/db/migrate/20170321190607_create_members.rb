@@ -4,8 +4,10 @@ class CreateMembers < ActiveRecord::Migration[5.0]
           
           t.text :MName, null: false
           t.text :MPassword, null: false
-          t.text :Email, unique: true, null: false
+          t.string :Email, null: false, :limit => 255
           t.text :PhoneNum, null: false
+
+          t.index :Email, unique: true
           
         t.timestamps
     end

@@ -77,10 +77,11 @@ ActiveRecord::Schema.define(version: 20170329191704) do
   create_table "members", primary_key: "MemberID", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text     "MName",      limit: 65535, null: false
     t.text     "MPassword",  limit: 65535, null: false
-    t.text     "Email",      limit: 65535, null: false
+    t.string   "Email",                    null: false
     t.text     "PhoneNum",   limit: 65535, null: false
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.index ["Email"], name: "index_members_on_Email", unique: true, using: :btree
   end
 
   create_table "rooms", primary_key: "RoomID", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -90,7 +91,7 @@ ActiveRecord::Schema.define(version: 20170329191704) do
   end
 
   create_table "transactions", primary_key: "TransactionID", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.text     "ReferenceID",  limit: 65535, null: false
+    t.string   "ReferenceID",                null: false
     t.text     "Type",         limit: 65535, null: false
     t.datetime "Time",                       null: false
     t.integer  "TotalPayment",               null: false
@@ -98,6 +99,7 @@ ActiveRecord::Schema.define(version: 20170329191704) do
     t.datetime "updated_at",                 null: false
     t.integer  "EmployeeID"
     t.index ["EmployeeID"], name: "index_transactions_on_EmployeeID", using: :btree
+    t.index ["ReferenceID"], name: "index_transactions_on_ReferenceID", unique: true, using: :btree
   end
 
   add_foreign_key "adoptions", "employees", column: "EmployeeID", primary_key: "EmployeeID", on_delete: :cascade
