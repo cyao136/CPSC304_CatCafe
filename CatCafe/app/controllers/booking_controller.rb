@@ -20,8 +20,9 @@ class BookingController < ApplicationController
 
 	def edit_booking
 		@bookingID = params[:bookingID]
-		@date = params[:booking][:day]
-		@time = params[:start][:end]
+		@bookingDay = params[:day]
+		@bookingStart = params[:start]
+		@bookingEnd = params[:end]
 		@roomId = params[:room_id]
 		#TODO: fill in params
 		Booking.edit()

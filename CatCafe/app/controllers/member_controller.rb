@@ -20,9 +20,10 @@ class MemberController < ApplicationController
 
 	def book_submit
 		#TODO: submit params
-		@memberId = params[:id]
-		@bookingTime = params[:day][:start][:end]
-		@member = params[:member]
+		@bookingDay = params[:day]
+		@bookingStart = params[:start]
+		@bookingEnd = params[:end]
+		@memberId = params[:member][:id]
 		@roomId = params[:room_id]
 
 		Booking.create()
@@ -30,7 +31,7 @@ class MemberController < ApplicationController
 
 	def rooms_booked_by
 		# which id? o_o
-		@memberId = params[:id]
+		@memberId = params[:member][:id]
 		@result = Booking.bookedBy(@memberId)
 	end
 
@@ -43,14 +44,15 @@ class MemberController < ApplicationController
 	end
 
 	def find_member_email
-		@email = params[:email]
+		@email = params[:member][:email]
 		result = Member.findByEmail(@email)
 		@member = result.first
 	end
 
 	def edit_member
 		@id = params[:id]
-		@mname = params[:user][:firstname][:lastname]
+		@fname = params[:user][:firstname]
+		@lname = params[:user][:lastname]
 		@telephone = params[:user][:telephone]
 		@email = params[:email]
 		@mpassword = params[:user][:password]
@@ -58,7 +60,7 @@ class MemberController < ApplicationController
 	end
 
 	def destroy
-		@id = params[:id]
+		@id = params[:member][:id]
 		Member.edit(@id)
 	end
 end
