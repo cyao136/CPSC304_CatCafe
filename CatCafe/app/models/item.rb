@@ -3,7 +3,7 @@ class Item < ApplicationRecord\
 	# Find item with id = id
     def self.findById(id)
         results = nil
-        sqlQuery = "SELECT * FROM items WHERE ItemID = #{id};"
+        sqlQuery = "SELECT * FROM Items WHERE ItemID = #{id};"
         begin
             ActiveRecord::Base.transaction do
 				results = ActiveRecord::Base.connection.execute(sqlQuery)
@@ -11,13 +11,14 @@ class Item < ApplicationRecord\
         rescue Exception => exc
             return exc;
         end
-        return results
+        return results.first
     end
 
+=begin
     # Find item with name (?)
-    def self.findByEmail(name)
+    def self.findByName(iname)
         results = nil
-        sqlQuery = "SELECT * FROM Items WHERE Name = \'" + name + "\';"
+        sqlQuery = "SELECT * FROM Items WHERE Name = \'" + iname + "\';"
         begin
             ActiveRecord::Base.transaction do
                 results = ActiveRecord::Base.connection.execute(sqlQuery)
@@ -27,12 +28,12 @@ class Item < ApplicationRecord\
         end
         return results.first
     end
+=end
 
-    #TODO create and edit should have their respective params
-    def self.create(name, price)
+    def self.create(iname, price)
         results = nil
         sqlQuery = "INSERT INTO Items (Name, Price) VALUE "
-        sqlQuery = sqlQuery + "(\'" + name + "\', \'" + price + "\');"
+        sqlQuery = sqlQuery + "(\'#{iname}\', \'#{price}\');"
         begin
             ActiveRecord::Base.transaction do
                 results = ActiveRecord::Base.connection.execute(sqlQuery)
@@ -43,12 +44,12 @@ class Item < ApplicationRecord\
         return results
     end
 
-    def self.edit(id, name, price)
+    def self.edit(id, iname, price)
         results = nil
         addComma = false
         sqlQuery = "UPDATE Items SET "
-        if (!name.nil?)
-            sqlQuery = sqlQuery + "Name = \'" + name + "\'"
+        if (!iname.nil?)
+            sqlQuery = sqlQuery + "Name = \'" + iname + "\'"
             addComma = true
         end
         if (!price.nil?)

@@ -11,13 +11,12 @@ class Transaction < ApplicationRecord
         rescue Exception => exc
             return exc;
         end
-        return results
+        return results.first
     end
 
-    # Find transaction with totalpayment, time
-    def self.findByEmail(email)
+    def self.findByReferenceId(referenceid)
         results = nil
-        sqlQuery = "SELECT * FROM Transactions WHERE TotalPayment = \'" + totalpayment + "\' AND Time = \'" + time + "\';"
+        sqlQuery = "SELECT * FROM Transactions WHERE ReferenceID = \'" + referenceid + "\';"
         begin
             ActiveRecord::Base.transaction do
                 results = ActiveRecord::Base.connection.execute(sqlQuery)
@@ -25,14 +24,14 @@ class Transaction < ApplicationRecord
         rescue Exception => exc
             return exc;
         end
-        return results
+        return results.first
     end
 
     #TODO create and edit should have their respective params
     def self.create(referenceid, type, totalpayment, time, employeeid)
         results = nil
         sqlQuery = "INSERT INTO Transactions (ReferenceID, Type, TotalPayment, Time, EmployeeID) VALUE "
-        sqlQuery = sqlQuery + "(\'" + referenceid + "\', \'" + type + "\', \'" + totalpayment + "\', \'" + time + "\', \'" + employeeid + "\');"
+        sqlQuery = sqlQuery + "(\'#{referenceid}\', \'#{type}\', #{totalpayment}, \'#{time}\', #{employeeid});"
         begin
             ActiveRecord::Base.transaction do
                 results = ActiveRecord::Base.connection.execute(sqlQuery)
@@ -62,7 +61,7 @@ class Transaction < ApplicationRecord
             if (addComma)
                 sqlQuery = sqlQuery + ", "
             end
-            sqlQuery = sqlQuery + "TotalPayment = \'" + totalpayment + "\'"
+            sqlQuery = sqlQuery + "TotalPayment = #{totalpayment}"
             addComma = true
         end
         if (!time.nil?)
@@ -76,7 +75,7 @@ class Transaction < ApplicationRecord
             if (addComma)
                 sqlQuery = sqlQuery + ", "
             end
-            sqlQuery = sqlQuery + "EmployeeID = \'" + employeeid + "\'"
+            sqlQuery = sqlQuery + "EmployeeID = #{employeeid}"
             addComma = true
         end
         sqlQuery = sqlQuery + " WHERE TransactionID = #{id};"

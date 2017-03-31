@@ -11,9 +11,10 @@ class Room < ApplicationRecord
         rescue Exception => exc
             return exc;
         end
-        return results
+        return results.first
     end
 
+=begin
     # Find room with status
     def self.findByStatus(status)
         results = nil
@@ -27,12 +28,12 @@ class Room < ApplicationRecord
         end
         return results
     end
+=end
 
-    #TODO create and edit should have their respective params
     def self.create(status)
         results = nil
-        sqlQuery = "INSERT INTO Rooms (Status) VALUE "
-        sqlQuery = sqlQuery + "(\'" + status + "\');"
+        sqlQuery = "INSERT INTO Rooms (status) VALUE "
+        sqlQuery = sqlQuery + "(#{status});"
         begin
             ActiveRecord::Base.transaction do
                 results = ActiveRecord::Base.connection.execute(sqlQuery)
@@ -48,7 +49,7 @@ class Room < ApplicationRecord
         addComma = false
         sqlQuery = "UPDATE Rooms SET "
         if (!status.nil?)
-            sqlQuery = sqlQuery + "Status = \'" + status + "\'"
+            sqlQuery = sqlQuery + "Status = " + (status ? "TRUE" : "FALSE")
             addComma = true
         end
         sqlQuery = sqlQuery + " WHERE RoomID = #{id};"

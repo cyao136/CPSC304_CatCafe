@@ -11,13 +11,13 @@ class Member < ApplicationRecord
  		rescue Exception => exc
    			return exc;
  		end
- 		return results
+ 		return results.first
 	end
 
 	# Find member with email
 	def self.findByEmail(email)
 		results = nil
-		sqlQuery = "SELECT * FROM Members WHERE Email = \'" + email + "\';"
+		sqlQuery = "SELECT * FROM Members WHERE Email = \'#{email}\';"
 		begin  
   			ActiveRecord::Base.transaction do
 				results = ActiveRecord::Base.connection.execute(sqlQuery)
@@ -25,14 +25,14 @@ class Member < ApplicationRecord
  		rescue Exception => exc
    			return exc;
  		end
- 		return results
+ 		return results.first
 	end
 
 	#TODO create and edit should have their respective params
 	def self.create(mname, phonenum, email, mpassword)
 		results = nil
 		sqlQuery = "INSERT INTO Members (MName, PhoneNum, Email, MPassword) VALUE " 
-		sqlQuery = sqlQuery + "(\'" + mname + "\', \'" + phonenum + "\', \'" + email + "\', \'" + mpassword + "\');"
+		sqlQuery = sqlQuery + "(\'#{mname}\', \'#{phonenum}\', \'#{email}\', \'#{mpassword}\');"
 		begin
   			ActiveRecord::Base.transaction do
 				results = ActiveRecord::Base.connection.execute(sqlQuery)

@@ -1,8 +1,7 @@
 class Employee < ApplicationRecord
 
 
-    # Find employees
-    with id = id
+    # Find employees with id = id
     def self.findById(id)
         results = nil
         sqlQuery = "SELECT * FROM Employees WHERE EmployeeID = #{id};"
@@ -13,14 +12,27 @@ class Employee < ApplicationRecord
         rescue Exception => exc
             return exc;
         end
-        return results
+        return results.first
     end
 
-    #TODO create and edit should have their respective params
+    def self.manager?(id)
+        results = nil
+        sqlQuery = "SELECT * FROM Employees WHERE Employees.EmployeeID IN (SELECT EmployeeID FROM Managers WHERE Managers.EmployeeID = #{id});"
+        
+        begin
+            ActiveRecord::Base.transaction do
+                results = ActiveRecord::Base.connection.execute(sqlQuery)
+            end
+            rescue Exception => exc
+            return exc;
+        end
+        return !results.first.empty?
+    end
+
     def self.create(ename, epassword)
         results = nil
         sqlQuery = "INSERT INTO Employees (EName, EPassword) VALUE "
-        sqlQuery = sqlQuery + "(\'" + ename + "\', \'" + epassword + "\');"
+        sqlQuery = sqlQuery + "(\'#{ename}\', \'(epassword)\');"
         begin
             ActiveRecord::Base.transaction do
                 results = ActiveRecord::Base.connection.execute(sqlQuery)
@@ -71,19 +83,4 @@ class Employee < ApplicationRecord
         end
         return results
     end
-
-    # return true if employeeid is a managerid??
-	def self.isManager(id)
-        results = nil
-        sqlQuery = "SELECT * FROM Employees WHERE EmployeeID = #{id};"
-        
-        begin
-            ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
-            end
-            rescue Exception => exc
-            return exc;
-        end
-        return results
-	end
 end

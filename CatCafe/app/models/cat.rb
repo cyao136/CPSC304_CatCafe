@@ -11,9 +11,38 @@ class Cat < ApplicationRecord
         rescue Exception => exc
             return exc;
         end
+        return results.first
+    end
+
+    # Return a list of cats foster by employee with id employeeId
+    def self.fosteredBy(employeeid)
+        results = nil
+        sqlQuery = "SELECT * FROM Cats WHERE EmployeeID = #{employeeid};"
+
+        begin
+            ActiveRecord::Base.transaction do
+                results = ActiveRecord::Base.connection.execute(sqlQuery)
+            end
+        rescue Exception => exc
+            return exc;
+        end
         return results
     end
 
+    def self.adoptableCats()
+        results = nil
+        sqlQuery = "SELECT * FROM cats WHERE cats.CatID NOT IN (SELECT CatID FROM adoptions);"
+        begin
+            ActiveRecord::Base.transaction do
+                results = ActiveRecord::Base.connection.execute(sqlQuery)
+            end
+        rescue Exception => exc
+            return exc;
+        end
+        return results
+    end
+
+=begin
     # Find cat with name
     def self.findByName(catname)
         results = nil
@@ -27,12 +56,12 @@ class Cat < ApplicationRecord
         end
         return results
     end
+=end
 
-    #TODO create and edit should have their respective params
     def self.create(catname, catphotourl, cattype, employeeid)
         results = nil
         sqlQuery = "INSERT INTO Cats (CatName, CatPhotoUrl, CatType, EmployeeID) VALUE "
-        sqlQuery = sqlQuery + "(\'" + catname + "\', \'" + catphotourl + "\', \'" + cattype + "\', \'" + employeeid + "\');"
+        sqlQuery = sqlQuery + "(\'#{catname}\', \'#{catphotourl}\', \'#{cattype}\', #{employeeid});"
         begin
             ActiveRecord::Base.transaction do
                 results = ActiveRecord::Base.connection.execute(sqlQuery)
@@ -69,7 +98,7 @@ class Cat < ApplicationRecord
             if (addComma)
                 sqlQuery = sqlQuery + ", "
             end
-            sqlQuery = sqlQuery + "EmployeeID = \'" + employeeid + "\'"
+            sqlQuery = sqlQuery + "EmployeeID = #{employeeid}"
             addComma = true
         end
         sqlQuery = sqlQuery + " WHERE CatID = #{id};"
@@ -97,19 +126,4 @@ class Cat < ApplicationRecord
         end
         return results
     end
-
-	# Return a list of cats foster by employee with id employeeId
-	def self.fosteredBy(employeeid)
-        results = nil
-        sqlQuery = "SELECT * FROM Cats WHERE CatID = #{id};"
-
-        begin
-            ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
-            end
-        rescue Exception => exc
-            return exc;
-        end
-        return results
-	end
 end

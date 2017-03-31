@@ -1,5 +1,18 @@
 class Booking < ApplicationRecord
 
+    def self.bookedTimesForRoomByDate(roomid, date)
+        results = nil
+        sqlQuery = "SELECT * FROM bookings WHERE bookings.RoomID = #{roomid} AND bookings.Date = \'#{date}\';"
+        begin
+            ActiveRecord::Base.transaction do
+                results = ActiveRecord::Base.connection.execute(sqlQuery)
+            end
+        rescue Exception => exc
+            return exc;
+        end
+        return results
+    end
+
 	# Find booking with id = id
 	def self.findById(id)
 		results = nil
@@ -11,9 +24,10 @@ class Booking < ApplicationRecord
         rescue Exception => exc
             return exc;
         end
-        return results
+        return results.first
     end
 
+=begin
     # Find booking with date and fromTime (if there is only 1 room)
     def self.findByDateAndTime(date, fromtime)
         results = nil
@@ -27,13 +41,28 @@ class Booking < ApplicationRecord
         end
         return results
     end
+=end
 
+    # return bookings booked by member with Id memberId
+    def self.bookedBy(memberid)
+        results = nil
+        sqlQuery = "SELECT * FROM bookings WHERE MemberId = #{memberid};"
+
+        begin
+            ActiveRecord::Base.transaction do
+                results = ActiveRecord::Base.connection.execute(sqlQuery)
+            end
+        rescue Exception => exc
+            return exc;
+        end
+        return results
+    end
 
 	# create and edit
 	def self.create(date, fromtime, totime, memberid, roomid)
         results = nil
         sqlQuery = "INSERT INTO bookings (Date, FromTime, ToTime, MemberID, RoomID) VALUE"
-        sqlQuery = sqlQuery + "(\'" + date  + "\', \'" + fromtime + "\',\'" + totime + "\', \'" + memberid + "\',\'" + roomid + "\');"
+        sqlQuery = sqlQuery + "(\'#{date}\', \'#{fromtime}\', \'#{totime}\', \'#{memberid}\',\'#{roomid}\');"
         begin
             ActiveRecord::Base.transaction do
                 results = ActiveRecord::Base.connection.execute(sqlQuery)
@@ -63,14 +92,14 @@ class Booking < ApplicationRecord
             if (addComma)
                 sqlQuery = sqlQuery + ", "
             end
-            sqlQuery = sqlQuery + "MemberID = \'" + memberid + "\ '"
+            sqlQuery = sqlQuery + "MemberID = #{memberid}"
             addComma = true
         end
         if (!roomid.nil?)
             if (addComma)
                 sqlQuery = sqlQuery + ", "
             end
-            sqlQuery = sqlQuery + " RoomID = \'" + roomid + "\'"
+            sqlQuery = sqlQuery + " RoomID = #{roomid}"
             addComma = true
         end
         sqlQuery = sqlQuery + " WHERE BookingID = #{id};"
@@ -87,21 +116,6 @@ class Booking < ApplicationRecord
     def self.destroy(id)
         results = nil
         sqlQuery = " DELETE FROM Bookings WHERE BookingID = #{id};"
-
-        begin
-            ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
-            end
-        rescue Exception => exc
-            return exc;
-        end
-        return results
-    end
-
-	# return bookings booked by member with Id memberId
-	def self.bookedBy(memberid)
-        results = nil
-        sqlQuery = "SELECT * FROM bookings WHERE MemberId = #{memberid};"
 
         begin
             ActiveRecord::Base.transaction do
