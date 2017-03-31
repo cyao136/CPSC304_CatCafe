@@ -3,34 +3,54 @@ class MemberController < ApplicationController
 	end
 
 	def adopt
-		@available_cats = [["Meow", 1],["Roar", 2]]
+		result = Cat.adoptableCats();
+		@available_cats = Array.new;
+		if !result.nil?
+			result.each do |cat|
+				newCat = [cat["CatName"], cat["CatID"]]
+				@available_cats << newCat
+			end
+		end
 	end
 
 	def adopt_submit
-		#TODO Submit the adoption with params
 		@memberId = params[:id]
-		@age = params[:member][:age]
-		@phone = params[:member][:phone]
 		@catId = params[:cat_id]
+		Cat.adopt(@catId, @memberId)
 	end
 
 	def book
-		@available_rooms = [101, 101, 102, 103, 104]
+		result = Room.availableRooms();
+		@available_rooms = Array.new;
+		if !result.nil?
+			result.each do |room|
+				newRoom = room["RoomID"]
+				@available_rooms << newRoom
+			end
+		end
 	end
 
 	def book_submit
-		#TODO: submit params
-		@bookingDay = params[:day]
-		@bookingStart = params[:start]
-		@bookingEnd = params[:end]
-		@memberId = params[:member][:id]
+		@bookingDay = params[:booking][:day]
+		@bookingStart = params[:booking][:start]
+		@bookingEnd = params[:booking][:end]
+		@memberId = params[:id]
 		@roomId = params[:room_id]
 
-		Booking.create()
+		bookedTimes = Booking.bookedTimesForRoomByDate(@roomId, @bookingDay)
+
+		if !bookedTimes.nil?
+			bookedTimes.each do |book|
+				if book["FromTime"] == @bookingStart
+      				flash[:errors] = "Room not free during that time!"
+					redirect_to controller: "member", action: "book", id: @memberId
+				end
+			end
+		end
+		Booking.create(@bookingDay, @bookingStart, @bookingEnd, @memberId, @roomId)
 	end
 
 	def rooms_booked_by
-		# which id? o_o
 		@memberId = params[:member][:id]
 		@result = Booking.bookedBy(@memberId)
 	end
@@ -39,7 +59,6 @@ class MemberController < ApplicationController
 		@id = params[:id]
 		result = Member.findById(@id)
 		@member = result.first
-		#TODO: not sure about the id param
 		# return member
 	end
 
@@ -56,11 +75,11 @@ class MemberController < ApplicationController
 		@telephone = params[:user][:telephone]
 		@email = params[:email]
 		@mpassword = params[:user][:password]
-		Member.edit(@memberId, @name, @telephone, @email, @password)
+		Member.edit(@memberId, "#{@fname} #{@lname}", @telephone, @email, @password)
 	end
 
 	def destroy
 		@id = params[:member][:id]
-		Member.edit(@id)
+		Member.destroy(@id)
 	end
 end

@@ -1,10 +1,10 @@
 <div class="container">
 	<h2>Sign Up</h2>
-	<%= form_tag(controller: "login",  action: "sign_up", method: "post", class: "form-group") do %>
+	<%= form_tag(controller: "login",  action: "sign_up_submit", method: "post", class: "form-group") do %>
 		<%= text_field(:user, :firstname, placeholder:'First name') %>
 		<%= text_field(:user, :lastname, placeholder:'Last name') %>
 		<%= telephone_field(:user, :telephone, placeholder:'Telephone') %>
-		<%= email_field(:email, placeholder:'Email') %>
+		<%= email_field(:user, :email, placeholder:'Email') %>
 		<%= password_field(:user, :password, placeholder:'Password') %> 
 
 		<%= submit_tag("Sign Up") %>

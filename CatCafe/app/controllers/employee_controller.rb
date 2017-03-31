@@ -4,8 +4,8 @@ class EmployeeController < ApplicationController
 
 	def find_employee
 		@employeeId = params[:employee][:id]
-		result = Employee.find(@employeeId)
-		@employee = result.first
+		result = Employee.findById(@employeeId)
+		@employee = result
 	end
 
 	def create_employee
@@ -23,12 +23,12 @@ class EmployeeController < ApplicationController
 
 	def isManager
 		@employeeId = params[:employee][:id]
-		isManager = Employee.isManager(@employeeId)
+		isManager = Employee.manager?(@employeeId)
 	end
 
 	def find_transaction
 		@transactionId = params[:transaction][:id]
-		result = Transaction.find(@transactionId)
+		result = Transaction.findById(@transactionId)
 	end
 
 	def create_transaction
@@ -54,8 +54,8 @@ class EmployeeController < ApplicationController
 
 	def find_item
 		@itemId = params[:item][:id]
-		result = Item.find(@itemId)
-		@item = @itemId.first
+		result = Item.findById(@itemId)
+		@item = @itemId
 	end
 
 	def create_item

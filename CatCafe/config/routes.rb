@@ -11,7 +11,9 @@ Rails.application.routes.draw do
   get 'login' => 'login#login'
   get 'sign_up' => 'login#sign_up'
 
-  post 'login/:id/sign_up' => 'login#sign_up', as: :sign_up
+  post 'login_submit' => 'login#login_submit'
+  post 'sign_up_submit' => 'login#sign_up_submit'
+  post 'employee_login_submit' => 'login#employee_login_submit'
 
   get 'member/:id' => 'member#main', as: :member
   post 'member/:id/adopt' => 'member#adopt', as: :adopt

@@ -1,7 +1,7 @@
 <div class="container">
 	<h2>Login</h2>
-	<%= form_tag(controller: "login",  action: "login", method: "post", class: "form-group") do %>
-		<%= email_field(:email, placeholder:'Email') %>
+	<%= form_tag(controller: "login",  action: "login_submit", method: "post", class: "form-group") do %>
+		<%= email_field(:user, :email, placeholder:'Email') %>
 		<%= password_field(:user, :password, placeholder:'Password') %> 
 
 		<%= submit_tag("Login") %>
@@ -10,20 +10,10 @@
 
 <div>
 	<h2>Employee Login</h2>
-	<% if @employee.manager? %>
-		<%= form_tag(controller: "login",  action: "employee_login", method: "post", class: "form-group") do %>
-			<%= number_field(:employee, :id, placeholder:'Employee ID') %>
-			<%= password_field(:employee, :password, placeholder:'Password') %> 
+	<%= form_tag(controller: "login",  action: "employee_login_submit", method: "post", class: "form-group") do %>
+		<%= number_field(:employee, :id, placeholder:'Employee ID') %>
+		<%= password_field(:employee, :password, placeholder:'Password') %> 
 
-			<%= submit_tag("Login") %>
-		<% end %>
-	<% end %>
-	<% else %>
-		<%= form_tag(controller: "login",  action: "employee_login", method: "post", class: "form-group") do %>
-			<%= number_field(:employee, :id, placeholder:'Employee ID') %>
-			<%= password_field(:employee, :password, placeholder:'Password') %> 
-
-			<%= submit_tag("Login") %>
-		<% end %>
+		<%= submit_tag("Login") %>
 	<% end %>
 </div>

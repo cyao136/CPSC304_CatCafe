@@ -6,10 +6,10 @@ class Cat < ApplicationRecord
         sqlQuery = "SELECT * FROM cats WHERE CatID = #{id};"
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results.first
     end
@@ -21,10 +21,10 @@ class Cat < ApplicationRecord
 
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results
     end
@@ -34,10 +34,23 @@ class Cat < ApplicationRecord
         sqlQuery = "SELECT * FROM cats WHERE cats.CatID NOT IN (SELECT CatID FROM adoptions);"
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
+        end
+        return results
+    end
+
+    def self.adopt(catid, memberid)
+        results = nil
+        sqlQuery = "INSERT INTO adoptions (CatID, MemberID) VALUE (#{catid}, #{memberid});"
+        begin
+            ActiveRecord::Base.transaction do
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
+            end
+        rescue Exception => exc
+            raise exc;
         end
         return results
     end
@@ -49,10 +62,10 @@ class Cat < ApplicationRecord
         sqlQuery = "SELECT * FROM Members WHERE CatName = \'" + catname + "\';"
         begin
                 ActiveRecord::Base.transaction do
-                    results = ActiveRecord::Base.connection.execute(sqlQuery)
+                    results = ActiveRecord::Base.connection.exec_query(sqlQuery)
                 end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results
     end
@@ -64,10 +77,10 @@ class Cat < ApplicationRecord
         sqlQuery = sqlQuery + "(\'#{catname}\', \'#{catphotourl}\', \'#{cattype}\', #{employeeid});"
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results
     end
@@ -105,10 +118,10 @@ class Cat < ApplicationRecord
 
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results
     end
@@ -119,10 +132,10 @@ class Cat < ApplicationRecord
 
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results
     end

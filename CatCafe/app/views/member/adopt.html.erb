@@ -1,7 +1,5 @@
 <div class="container">
 	<%= form_tag(controller: "member", action: "adopt_submit", method: "post", class: "form-group") do %>
-		<%= number_field(:member, :age, step: 1) %>
-		<%= telephone_field(:member, :phone, placeholder: 'Telephone number') %>
 		<%= select_tag(:cat_id, options_for_select(@available_cats)) %>
 
 		<%= submit_tag("Adopt") %>

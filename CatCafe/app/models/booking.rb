@@ -5,10 +5,10 @@ class Booking < ApplicationRecord
         sqlQuery = "SELECT * FROM bookings WHERE bookings.RoomID = #{roomid} AND bookings.Date = \'#{date}\';"
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results
     end
@@ -19,10 +19,10 @@ class Booking < ApplicationRecord
         sqlQuery = "SELECT * FROM bookings WHERE BookingID = #{id};"
 		begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results.first
     end
@@ -34,10 +34,10 @@ class Booking < ApplicationRecord
         sqlQuery = "SELECT * FROM bookings WHERE Date = \ '" + date + "\'AND  FromTime = \ '" + fromtime + "\';"
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results
     end
@@ -50,10 +50,10 @@ class Booking < ApplicationRecord
 
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results
     end
@@ -65,10 +65,10 @@ class Booking < ApplicationRecord
         sqlQuery = sqlQuery + "(\'#{date}\', \'#{fromtime}\', \'#{totime}\', \'#{memberid}\',\'#{roomid}\');"
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results
     end
@@ -105,10 +105,10 @@ class Booking < ApplicationRecord
         sqlQuery = sqlQuery + " WHERE BookingID = #{id};"
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results
     end
@@ -119,10 +119,10 @@ class Booking < ApplicationRecord
 
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results
     end

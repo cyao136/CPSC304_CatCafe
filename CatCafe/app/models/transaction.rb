@@ -6,10 +6,10 @@ class Transaction < ApplicationRecord
         sqlQuery = "SELECT * FROM Transactions WHERE TransactionID = #{id};"
         begin
             ActiveRecord::Base.transaction do
-                        results = ActiveRecord::Base.connection.execute(sqlQuery)
+                        results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results.first
     end
@@ -19,10 +19,10 @@ class Transaction < ApplicationRecord
         sqlQuery = "SELECT * FROM Transactions WHERE ReferenceID = \'" + referenceid + "\';"
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results.first
     end
@@ -34,10 +34,10 @@ class Transaction < ApplicationRecord
         sqlQuery = sqlQuery + "(\'#{referenceid}\', \'#{type}\', #{totalpayment}, \'#{time}\', #{employeeid});"
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results
     end
@@ -82,10 +82,10 @@ class Transaction < ApplicationRecord
 
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results
     end
@@ -96,10 +96,10 @@ class Transaction < ApplicationRecord
 
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results
     end
