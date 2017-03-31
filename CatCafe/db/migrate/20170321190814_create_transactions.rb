@@ -6,10 +6,8 @@ class CreateTransactions < ActiveRecord::Migration[5.0]
         t.text :Type, null: false
         t.datetime :Time, null: false
         t.integer :TotalPayment, null: false
-
         t.index :ReferenceID, unique: true
-        
-      t.timestamps
+
     end
     rename_column :transactions, :id, :TransactionID
   end
