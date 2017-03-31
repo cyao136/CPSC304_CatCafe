@@ -31,7 +31,7 @@ class LoginController < ApplicationController
       @member = Member.login(@email, @password)
       redirect_to controller: 'member', action: 'main', id: @member["MemberID"]
     rescue Exception => e
-      flash[:errors] = e.message.full_messages.to_sentence
+      flash[:errors] = e.message
       redirect_to controller: 'login', action: 'sign_up'
     end
 

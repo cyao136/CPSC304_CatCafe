@@ -1,46 +1,28 @@
 class EmployeeController < ApplicationController
 	def main
-	end
-
-	def find_employee
-		@employeeId = params[:employee][:id]
-		result = Employee.findById(@employeeId)
-		@employee = result.first
-	end
-
-	def create_employee
-		@ename = params[:employee][:name]
-		@password = password[:employee][:password]
-		Employee.create(@ename, @password)
-	end
-
-	def edit_employee
-		@employeeId = params[:employee][:id]
-		@ename = params[:employee][:name]
-		@password = password[:employee][:password]
-		Employee.edit(@employeeId, @ename, @password)
-	end
-
-	def destroy_employee
-		@employeeId = params[:employee][:id]
-		Employee.destroy(@employeeId)
-	end	
-
-	def isManager
-		@employeeId = params[:employee][:id]
-		isManager = Employee.manager?(@employeeId)
+		@isManager = Employee.manager?(params[:id])
 	end
 
 	def find_transaction
 		@transactionId = params[:transaction][:id]
-		result = Transaction.findById(@transactionId)
-		@transaction = result.first
+		begin
+			@transaction = Transaction.findById(@transactionId)
+			flash[:notice] = @transaction
+		rescue Exception => e
+			flash[:warning] = e.message
+		end
+		redirect_to controller: "employee", action: "main", id: params[:id]
 	end
 
 	def find_by_refId
 		@referenceId = params[:transaction][:refId]
-		result = Employee.findByReferenceId
-		@transaction = result.first
+		begin
+			@transaction = Transaction.findByReferenceId(@referenceId)
+			flash[:notice] = @transaction
+		rescue Exception => e
+			flash[:warning] = e.message
+		end
+		redirect_to controller: "employee", action: "main", id: params[:id]
 	end
 
 	def create_transaction
@@ -49,7 +31,13 @@ class EmployeeController < ApplicationController
 		@total = params[:transaction][:total]
 		@time = params[:transaction][:time]
 		@employeeId = params[:employee][:id]
-		Transaction.create(@referenceId, @paymentType, @total, @time, @employeeId)
+		begin
+			Transaction.create(@referenceId, @paymentType, @total, @time, @employeeId)
+			flash[:notice] = "Transaction Created!"
+		rescue Exception => e
+			flash[:warning] = e.message
+		end
+		redirect_to controller: "employee", action: "main", id: params[:id]
 	end
 
 	def edit_transaction
@@ -59,35 +47,70 @@ class EmployeeController < ApplicationController
 		@total = params[:transaction][:total]
 		@time = params[:transaction][:time]
 		@employeeId = params[:employee][:id]
-		Transaction.edit(@transactionId, @referenceId, @paymentType, @total, @time, @employeeId)
+		begin
+			Transaction.edit(@transactionId, @referenceId, @paymentType, @total, @time, @employeeId)
+			flash[:notice] = "Transaction Edited!"
+		rescue Exception => e
+			flash[:warning] = e.message
+		end
+		redirect_to controller: "employee", action: "main", id: params[:id]
 	end
 
 	def destroy_transaction
-		@transactionId = [:transaction][:id]
-		Transaction.destroy(@transactionId)
+		@transactionId = params[:transaction][:id]
+		begin
+			Transaction.destroy(@transactionId)
+			flash[:notice] = "Transaction Destroyed!"
+		rescue Exception => e
+			flash[:warning] = e.message
+		end
+		redirect_to controller: "employee", action: "main", id: params[:id]
 	end
 
 	def find_item
 		@itemId = params[:item][:id]
-		result = Item.findById(@itemId)
-		@item = @itemId
+		@item = Item.findById(@itemId)
+		if !@item.nil?
+			flash[:notice] = @item
+		else
+			flash[:warning] = "No item found!"
+		end
+		redirect_to controller: "employee", action: "main", id: params[:id]
 	end
 
 	def create_item
 		@name = params[:item][:name]
 		@price = params[:item][:price]
-		Item.create(@name, @price)
+		begin
+			Item.create(@name, @price)
+			flash[:notice] = "Item Created!"
+		rescue Exception => e
+			flash[:warning] = e.message
+		end
+		redirect_to controller: "employee", action: "main", id: params[:id]
 	end
 
 	def edit_item
 		@itemId = params[:item][:id]
 		@name = params[:item][:name]
 		@price = params[:item][:price]
-		Item.edit(@itemId, @name, @price)
+		begin
+			Item.edit(@itemId, @name, @price)
+			flash[:notice] = "Item Edited!"
+		rescue Exception => e
+			flash[:warning] = e.message
+		end
+		redirect_to controller: "employee", action: "main", id: params[:id]
 	end
 
 	def destroy_item
 		@itemId = params[:item][:id]
-		Item.destroy(@itemId)
+		begin
+			Item.destroy(@itemId)
+			flash[:notice] = "Item Destroyed!"
+		rescue Exception => e
+			flash[:warning] = e.message
+		end
+		redirect_to controller: "employee", action: "main", id: params[:id]
 	end
 end

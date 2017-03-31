@@ -58,14 +58,13 @@ class MemberController < ApplicationController
 	def find_member_id
 		@id = params[:id]
 		result = Member.findById(@id)
-		@member = result.first
-		# return member
+		@member = result
 	end
 
 	def find_member_email
 		@email = params[:member][:email]
 		result = Member.findByEmail(@email)
-		@member = result.first
+		@member = result
 	end
 
 	def edit_member

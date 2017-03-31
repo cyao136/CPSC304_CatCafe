@@ -41,7 +41,6 @@ class Member < ApplicationRecord
  		return results.first
 	end
 
-	#TODO create and edit should have their respective params
 	def self.create(mname, phonenum, email, mpassword)
 		results = nil
 		sqlQuery = "INSERT INTO Members (MName, PhoneNum, Email, MPassword) VALUE " 
