@@ -12,40 +12,34 @@
 
 ActiveRecord::Schema.define(version: 20170329191704) do
 
-  create_table "adoptions", primary_key: ["MemberID", "EmployeeID"], force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "MemberID",   null: false
-    t.integer "EmployeeID", null: false
-    t.index ["EmployeeID"], name: "index_adoptions_on_EmployeeID", using: :btree
+  create_table "adoptions", primary_key: ["MemberID", "CatID"], force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "MemberID", null: false
+    t.integer "CatID",    null: false
+    t.index ["CatID"], name: "index_adoptions_on_CatID", using: :btree
     t.index ["MemberID"], name: "index_adoptions_on_MemberID", using: :btree
   end
 
   create_table "bookings", primary_key: "BookingID", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.time     "FromTime",   null: false
-    t.time     "ToTime",     null: false
-    t.date     "Date",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "MemberID"
-    t.integer  "RoomID"
+    t.time    "FromTime", null: false
+    t.time    "ToTime",   null: false
+    t.date    "Date",     null: false
+    t.integer "MemberID"
+    t.integer "RoomID"
     t.index ["MemberID"], name: "index_bookings_on_MemberID", using: :btree
     t.index ["RoomID"], name: "index_bookings_on_RoomID", using: :btree
   end
 
   create_table "cats", primary_key: "CatID", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.text     "CatName",     limit: 65535, null: false
-    t.text     "CatPhotoUrl", limit: 65535
-    t.text     "CatType",     limit: 65535
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.integer  "EmployeeID"
+    t.text    "CatName",     limit: 65535, null: false
+    t.text    "CatPhotoUrl", limit: 65535
+    t.text    "CatType",     limit: 65535
+    t.integer "EmployeeID"
     t.index ["EmployeeID"], name: "index_cats_on_EmployeeID", using: :btree
   end
 
   create_table "employees", primary_key: "EmployeeID", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.text     "EName",      limit: 65535, null: false
-    t.text     "EPassword",  limit: 65535, null: false
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.text "EName",     limit: 65535, null: false
+    t.text "EPassword", limit: 65535, null: false
   end
 
   create_table "item_managers", primary_key: ["ManagerID", "ItemID"], force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -63,10 +57,8 @@ ActiveRecord::Schema.define(version: 20170329191704) do
   end
 
   create_table "items", primary_key: "ItemID", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "Name",       null: false
-    t.integer  "Price",      null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string  "Name",  null: false
+    t.integer "Price", null: false
   end
 
   create_table "managers", primary_key: "ManagerID", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -75,19 +67,15 @@ ActiveRecord::Schema.define(version: 20170329191704) do
   end
 
   create_table "members", primary_key: "MemberID", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.text     "MName",      limit: 65535, null: false
-    t.text     "MPassword",  limit: 65535, null: false
-    t.string   "Email",                    null: false
-    t.text     "PhoneNum",   limit: 65535, null: false
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.text   "MName",     limit: 65535, null: false
+    t.text   "MPassword", limit: 65535, null: false
+    t.string "Email",                   null: false
+    t.text   "PhoneNum",  limit: 65535, null: false
     t.index ["Email"], name: "index_members_on_Email", unique: true, using: :btree
   end
 
   create_table "rooms", primary_key: "RoomID", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.boolean  "Status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.boolean "Status"
   end
 
   create_table "transactions", primary_key: "TransactionID", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -95,14 +83,12 @@ ActiveRecord::Schema.define(version: 20170329191704) do
     t.text     "Type",         limit: 65535, null: false
     t.datetime "Time",                       null: false
     t.integer  "TotalPayment",               null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
     t.integer  "EmployeeID"
     t.index ["EmployeeID"], name: "index_transactions_on_EmployeeID", using: :btree
     t.index ["ReferenceID"], name: "index_transactions_on_ReferenceID", unique: true, using: :btree
   end
 
-  add_foreign_key "adoptions", "employees", column: "EmployeeID", primary_key: "EmployeeID", on_delete: :cascade
+  add_foreign_key "adoptions", "cats", column: "CatID", primary_key: "CatID", on_delete: :cascade
   add_foreign_key "adoptions", "members", column: "MemberID", primary_key: "MemberID", on_delete: :cascade
   add_foreign_key "bookings", "members", column: "MemberID", primary_key: "MemberID", on_delete: :cascade
   add_foreign_key "bookings", "rooms", column: "RoomID", primary_key: "RoomID", on_delete: :cascade

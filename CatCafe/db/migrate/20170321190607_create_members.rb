@@ -8,8 +8,7 @@ class CreateMembers < ActiveRecord::Migration[5.0]
           t.text :PhoneNum, null: false
 
           t.index :Email, unique: true
-          
-        t.timestamps
+
     end
     rename_column :members, :id, :MemberID
   end

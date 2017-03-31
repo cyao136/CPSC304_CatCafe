@@ -13,8 +13,8 @@ class ForeignKeys < ActiveRecord::Migration[5.0]
       add_reference :adoptions, :member, references: :members, index: true
       add_foreign_key :adoptions, :members, column: :member_id, primary_key: :MemberID, on_delete: :cascade
       
-      add_reference :adoptions, :employee, references: :employees, index: true
-      add_foreign_key :adoptions, :employees, column: :employee_id, primary_key: :EmployeeID, on_delete: :cascade
+      add_reference :adoptions, :cat, references: :cats, index: true
+      add_foreign_key :adoptions, :cats, column: :cat_id, primary_key: :CatID, on_delete: :cascade
       
       add_reference :item_transactions, :transaction, references: :transactions, index: true
       add_foreign_key :item_transactions, :transactions, column: :transaction_id, primary_key: :TransactionID, on_delete: :cascade
