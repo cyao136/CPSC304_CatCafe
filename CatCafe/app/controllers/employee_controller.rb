@@ -5,7 +5,7 @@ class EmployeeController < ApplicationController
 	def find_employee
 		@employeeId = params[:employee][:id]
 		result = Employee.findById(@employeeId)
-		@employee = result
+		@employee = result.first
 	end
 
 	def create_employee
@@ -21,6 +21,11 @@ class EmployeeController < ApplicationController
 		Employee.edit(@employeeId, @ename, @password)
 	end
 
+	def destroy_employee
+		@employeeId = params[:employee][:id]
+		Employee.destroy(@employeeId)
+	end	
+
 	def isManager
 		@employeeId = params[:employee][:id]
 		isManager = Employee.manager?(@employeeId)
@@ -29,27 +34,37 @@ class EmployeeController < ApplicationController
 	def find_transaction
 		@transactionId = params[:transaction][:id]
 		result = Transaction.findById(@transactionId)
+		@transaction = result.first
+	end
+
+	def find_by_refId
+		@referenceId = params[:transaction][:refId]
+		result = Employee.findByReferenceId
+		@transaction = result.first
 	end
 
 	def create_transaction
 		@referenceId = params[:transaction][:refId]
 		@paymentType = params[:pay_type]
-		@trxnTotal = params[:transaction][:total]
-		@trxnDate = params[:transaction][:day]
+		@total = params[:transaction][:total]
+		@time = params[:transaction][:time]
 		@employeeId = params[:employee][:id]
-		#TODO: insert params
-		Transaction.create()
+		Transaction.create(@referenceId, @paymentType, @total, @time, @employeeId)
 	end
 
 	def edit_transaction
-		@trxnId =params[:transaction][:id]
+		@transactionId = params[:transaction][:id]
 		@referenceId = params[:transaction][:refId]
 		@paymentType = params[:pay_type]
-		@trxnTotal = params[:transaction][:total]
-		@trxnDate = params[:transaction][:day]
+		@total = params[:transaction][:total]
+		@time = params[:transaction][:time]
 		@employeeId = params[:employee][:id]
-		#TODO: insert params
-		Transaction.edit()
+		Transaction.edit(@transactionId, @referenceId, @paymentType, @total, @time, @employeeId)
+	end
+
+	def destroy_transaction
+		@transactionId = [:transaction][:id]
+		Transaction.destroy(@transactionId)
 	end
 
 	def find_item
@@ -68,6 +83,11 @@ class EmployeeController < ApplicationController
 		@itemId = params[:item][:id]
 		@name = params[:item][:name]
 		@price = params[:item][:price]
-		Item.edit(@itemId)
+		Item.edit(@itemId, @name, @price)
+	end
+
+	def destroy_item
+		@itemId = params[:item][:id]
+		Item.destroy(@itemId)
 	end
 end
