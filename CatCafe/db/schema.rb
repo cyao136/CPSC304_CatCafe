@@ -12,10 +12,10 @@
 
 ActiveRecord::Schema.define(version: 20170329191704) do
 
-  create_table "adoptions", primary_key: ["MemberID", "EmployeeID"], force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "MemberID",   null: false
-    t.integer "EmployeeID", null: false
-    t.index ["EmployeeID"], name: "index_adoptions_on_EmployeeID", using: :btree
+  create_table "adoptions", primary_key: ["MemberID", "CatID"], force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "MemberID", null: false
+    t.integer "CatID",    null: false
+    t.index ["CatID"], name: "index_adoptions_on_CatID", using: :btree
     t.index ["MemberID"], name: "index_adoptions_on_MemberID", using: :btree
   end
 
@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(version: 20170329191704) do
     t.index ["ReferenceID"], name: "index_transactions_on_ReferenceID", unique: true, using: :btree
   end
 
-  add_foreign_key "adoptions", "employees", column: "EmployeeID", primary_key: "EmployeeID", on_delete: :cascade
+  add_foreign_key "adoptions", "cats", column: "CatID", primary_key: "CatID", on_delete: :cascade
   add_foreign_key "adoptions", "members", column: "MemberID", primary_key: "MemberID", on_delete: :cascade
   add_foreign_key "bookings", "members", column: "MemberID", primary_key: "MemberID", on_delete: :cascade
   add_foreign_key "bookings", "rooms", column: "RoomID", primary_key: "RoomID", on_delete: :cascade

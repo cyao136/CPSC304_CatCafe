@@ -7,7 +7,7 @@ class Rename < ActiveRecord::Migration[5.0]
       rename_column :cats, :employee_id, :EmployeeID
       remove_column :adoptions, :id
       rename_column :adoptions, :member_id, :MemberID
-      rename_column :adoptions, :employee_id, :EmployeeID
+      rename_column :adoptions, :cat_id, :CatID
       rename_column :item_transactions, :id, :OrderID
       rename_column :item_transactions, :transaction_id, :TransactionID
       rename_column :item_transactions, :item_id, :ItemID
