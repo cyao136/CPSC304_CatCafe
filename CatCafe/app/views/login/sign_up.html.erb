@@ -1,12 +1,30 @@
-<div class="container">
+<html lang="en">
+
+<head>
+<style>
+.signup {
+color: #fff;
+text-align: center;
+margin-top: 10%;
+margin-bottom: 5%;
+
+}
+</style>
+</head>
+
+<body>
+<div class="container signup">
 	<h2>Sign Up</h2>
 	<%= form_tag(controller: "login",  action: "sign_up_submit", method: "post", class: "form-group") do %>
-		<%= text_field(:user, :firstname, placeholder:'First name') %>
-		<%= text_field(:user, :lastname, placeholder:'Last name') %>
-		<%= telephone_field(:user, :telephone, placeholder:'Telephone') %>
-		<%= email_field(:user, :email, placeholder:'Email') %>
-		<%= password_field(:user, :password, placeholder:'Password') %> 
+<%= text_field(:user, :firstname, placeholder:'First name', :style => "margin-bottom:2%; color:black;") %>
+<%= text_field(:user, :lastname, placeholder:'Last name', :style => "margin-bottom:2%; color:black;") %>
+<%= telephone_field(:user, :telephone, placeholder:'Telephone', :style => "margin-bottom:2%; color:black;") %>
+<%= email_field(:user, :email, placeholder:'Email', :style => "margin-bottom:2%; color:black;") %>
+<%= password_field(:user, :password, placeholder:'Password',:style => "margin-bottom:2%; color:black;") %>
 
-		<%= submit_tag("Sign Up") %>
+		<%= submit_tag("Sign Up", :style => "color:black;") %>
 	<% end %>
 </div>
+</body>
+
+</html>

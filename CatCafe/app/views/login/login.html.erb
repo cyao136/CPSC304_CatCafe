@@ -1,19 +1,43 @@
-<div class="container">
+<html lang="en">
+
+<head>
+<style>
+.member {
+color: #fff;
+text-align: center;
+margin-top: 10%;
+margin-bottom: 5%;
+}
+.employee {
+color: #fff;
+text-align: center;
+margin-bottom: 10%;
+
+}
+</style>
+</head>
+
+
+<body>
+<div class="container member">
 	<h2>Login</h2>
 	<%= form_tag(controller: "login",  action: "login_submit", method: "post", class: "form-group") do %>
-		<%= email_field(:user, :email, placeholder:'Email') %>
-		<%= password_field(:user, :password, placeholder:'Password') %> 
+		<%= email_field(:user, :email, placeholder:'Email', :style => "color:black;") %>
+		<%= password_field(:user, :password, placeholder:'Password', :style => "color:black;") %>
 
-		<%= submit_tag("Login") %>
+<%= submit_tag("Login", :style => "color:black;") %>
 	<% end %>
 </div>
 
-<div>
+<div class="container employee">
 	<h2>Employee Login</h2>
 	<%= form_tag(controller: "login",  action: "employee_login_submit", method: "post", class: "form-group") do %>
-		<%= number_field(:employee, :id, placeholder:'Employee ID') %>
-		<%= password_field(:employee, :password, placeholder:'Password') %> 
+		<%= number_field(:employee, :id, placeholder:'Employee ID', :style => "color:black;") %>
+		<%= password_field(:employee, :password, placeholder:'Password', :style => "color:black;") %>
 
-		<%= submit_tag("Login") %>
+		<%= submit_tag("Login", :style => "color:black;") %>
 	<% end %>
 </div>
+</body>
+
+</html>
