@@ -1,11 +1,11 @@
 <div class="container">
 	<%= form_tag(controller: "member", action: "adopt", id:params['id'], method: "get") do %>
-		<%= submit_tag("Adopt a cat") %>
+		<%= submit_tag"Adopt a cat", class: "btn btn-default" %>
 	<% end %>
-</div>
 
-<div class="container">
+	<br>
+	
 	<%= form_tag(controller: "member", action: "book", id:params['id'], method: "get") do %>
-		<%= submit_tag("Book a room") %>
+		<%= submit_tag "Book a room", class: "btn btn-default" %>
 	<% end %>
 </div>

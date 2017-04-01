@@ -1,7 +1,8 @@
-<div class="container">
+<div class="container adopt">
+	<h2>Adopt a cat!</h2>
 	<%= form_tag(controller: "member", action: "adopt_submit", method: "post", class: "form-group") do %>
-		<%= select_tag(:cat_id, options_for_select(@available_cats)) %>
-
-		<%= submit_tag("Adopt") %>
+		<%= select_tag(:cat_id, options_for_select(@available_cats), class: "form-control") %>
+		<br>
+		<%= submit_tag "Adopt", class: "btn btn-default" %>
 	<% end %>
 </div>

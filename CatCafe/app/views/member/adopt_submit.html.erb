@@ -1,3 +1,7 @@
 <div class="container">
 	<text> Thank you for adopting a cat! We will let you know by email if it was successful! <text>
+	<br>
+	<%= form_tag(controller: "member", action: "main", id:params['id'], method: "get") do %>
+		<%= submit_tag("Back", class: "btn btn-default") %>
+	<% end %>
 </div>

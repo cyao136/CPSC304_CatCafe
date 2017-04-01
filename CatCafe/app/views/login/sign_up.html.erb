@@ -1,12 +1,33 @@
-<div class="container">
-	<h2>Sign Up</h2>
-	<%= form_tag(controller: "login",  action: "sign_up_submit", method: "post", class: "form-group") do %>
-		<%= text_field(:user, :firstname, placeholder:'First name') %>
-		<%= text_field(:user, :lastname, placeholder:'Last name') %>
-		<%= telephone_field(:user, :telephone, placeholder:'Telephone') %>
-		<%= email_field(:user, :email, placeholder:'Email') %>
-		<%= password_field(:user, :password, placeholder:'Password') %> 
-
-		<%= submit_tag("Sign Up") %>
-	<% end %>
+<div class="container signup">
+	<div class="row">
+		<div class="col-sm-4"></div>
+		<div class="col-sm-4">
+			<h2>Sign Up</h2>
+			<%= form_tag(controller: "login",  action: "sign_up_submit", method: "post", class: "form-group") do %>
+				<div class="col-sm-4">
+					<%= text_field(:user, :firstname, placeholder:'First name', class: "form-control") %>
+				<br>
+				</div>
+				<div class="col-sm-8">
+					<%= text_field(:user, :lastname, placeholder:'Last name', class: "form-control") %>
+				<br>
+				</div>
+				<div class="col-sm-12">
+					<%= telephone_field(:user, :telephone, placeholder:'Telephone', class: "form-control") %>
+				<br>
+				</div>
+				<div class="col-sm-12">
+					<%= email_field(:user, :email, placeholder:'Email', class: "form-control") %>
+				<br>
+				</div>
+				<div class="col-sm-12">
+					<%= password_field(:user, :password, placeholder:'Password', class: "form-control") %>
+				<br>
+				</div>
+				<%= submit_tag "Sign Up", class: "btn btn-default" %>
+			<% end %>
+		</div>
+		<div class="col-sm-4"></div>
+	</div>
 </div>
+

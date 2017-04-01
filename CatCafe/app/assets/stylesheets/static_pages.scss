@@ -1,3 +1,20 @@
 // Place all the styles related to the static_pages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.jumbotron {
+background: url(https://res.cloudinary.com/sagacity/image/upload/c_crop,h_2832,w_4256,x_0,y_0/c_limit,f_auto,fl_lossy,q_80,w_1080/shutterstock_379730806_xrxkx5.jpg) no-repeat center center fixed;
+background-size: cover;
+background: contain;
+width: 100%;
+height: 80vh;
+color: #fff;
+text-align: center;
+display:inline-block;
+vertical-align:middle;
+padding: 130px 100px;
+}
+h1 {
+font-family:"CafeandBrewery";font-family: 'Pacifico', cursive;
+margin-bottom: 5%;
+}
