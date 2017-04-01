@@ -1,3 +1,7 @@
 <div class="container">
 	<text> Thank you for booking a room with us! We look forward to seeing you sonn! <text>
+	<br>
+	<%= form_tag(controller: "member", action: "main", id:params['id'], method: "get") do %>
+		<%= submit_tag("Back", class: "btn btn-default") %>
+	<% end %>
 </div>

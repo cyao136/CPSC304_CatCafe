@@ -1,25 +1,8 @@
-<style>
-.adopt {
-text-align: center;
-margin-bottom: 5%;
-background: url(https://res.cloudinary.com/sagacity/image/upload/c_crop,h_2832,w_4256,x_0,y_0/c_limit,f_auto,fl_lossy,q_80,w_1080/shutterstock_379730806_xrxkx5.jpg) no-repeat center center fixed;
-background-size: cover;
-background: contain;
-width: 100%;
-height: 80vh;
-}
-h2{
-font-family: 'Pacifico', cursive;
-margin-top: 10%;
-margin-bottom: 5%;
-color: #fff;
-}
-</style>
 <div class="container adopt">
-<h2>Adopt a cat!</h2>
+	<h2>Adopt a cat!</h2>
 	<%= form_tag(controller: "member", action: "adopt_submit", method: "post", class: "form-group") do %>
-		<%= select_tag(:cat_id, options_for_select(@available_cats)) %>
-
-		<%= submit_tag("Adopt") %>
+		<%= select_tag(:cat_id, options_for_select(@available_cats), class: "form-control") %>
+		<br>
+		<%= submit_tag "Adopt", class: "btn btn-default" %>
 	<% end %>
 </div>

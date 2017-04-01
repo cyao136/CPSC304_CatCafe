@@ -10,8 +10,45 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require bootstrap.min
  *= require_tree .
  *= require_self
  */
 
-*= require bootstrap.min
+.navbar {
+width: 100%;
+padding: 0;
+text-align: center;
+}
+.navbar-right {
+margin-right:2%;
+}
+.navbar-brand{
+font-family: 'Pacifico', cursive;
+}
+
+.btn{
+background: #F8F8F8;
+border:#F8F8F8;
+}
+.btn-info{
+color: #777;
+}
+.btn-info:hover, .btn-info:focus {
+background: #333;
+color: #ffff;
+}
+a:hover,
+a:focus {
+color: #333;
+}
+
+h2{
+font-family: 'Pacifico', cursive;
+margin-top: 10%;
+margin-bottom: 5%;
+color: #fff;
+}
+footer{
+	color: #fff;
+}

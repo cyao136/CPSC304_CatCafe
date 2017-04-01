@@ -1,33 +1,33 @@
-<style>
-.signup {
-background: url(https://res.cloudinary.com/sagacity/image/upload/c_crop,h_2832,w_4256,x_0,y_0/c_limit,f_auto,fl_lossy,q_80,w_1080/shutterstock_379730806_xrxkx5.jpg) no-repeat center center fixed;
-background-size: cover;
-background: contain;
-width: 100%;
-height: 80vh;
-color: #fff;
-text-align: center;
-margin-bottom: 5%;
-}
-h2{
-font-family: 'Pacifico', cursive;
-margin-top: 10%;
-margin-bottom: 5%;
-}
-</style>
-
-<body>
 <div class="container signup">
-	<h2>Sign Up</h2>
-	<%= form_tag(controller: "login",  action: "sign_up_submit", method: "post", class: "form-group") do %>
-<%= text_field(:user, :firstname, placeholder:'First name', :style => "margin-bottom:2%; color:black;") %>
-<%= text_field(:user, :lastname, placeholder:'Last name', :style => "margin-bottom:2%; color:black;") %>
-<%= telephone_field(:user, :telephone, placeholder:'Telephone', :style => "margin-bottom:2%; color:black;") %>
-<%= email_field(:user, :email, placeholder:'Email', :style => "margin-bottom:2%; color:black;") %>
-<%= password_field(:user, :password, placeholder:'Password',:style => "margin-bottom:2%; color:black;") %>
-
-		<%= submit_tag("Sign Up", :style => "color:black;") %>
-	<% end %>
+	<div class="row">
+		<div class="col-sm-4"></div>
+		<div class="col-sm-4">
+			<h2>Sign Up</h2>
+			<%= form_tag(controller: "login",  action: "sign_up_submit", method: "post", class: "form-group") do %>
+				<div class="col-sm-4">
+					<%= text_field(:user, :firstname, placeholder:'First name', class: "form-control") %>
+				<br>
+				</div>
+				<div class="col-sm-8">
+					<%= text_field(:user, :lastname, placeholder:'Last name', class: "form-control") %>
+				<br>
+				</div>
+				<div class="col-sm-12">
+					<%= telephone_field(:user, :telephone, placeholder:'Telephone', class: "form-control") %>
+				<br>
+				</div>
+				<div class="col-sm-12">
+					<%= email_field(:user, :email, placeholder:'Email', class: "form-control") %>
+				<br>
+				</div>
+				<div class="col-sm-12">
+					<%= password_field(:user, :password, placeholder:'Password', class: "form-control") %>
+				<br>
+				</div>
+				<%= submit_tag "Sign Up", class: "btn btn-default" %>
+			<% end %>
+		</div>
+		<div class="col-sm-4"></div>
+	</div>
 </div>
-</body>
 
