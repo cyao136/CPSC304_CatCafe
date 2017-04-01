@@ -1,0 +1,12 @@
+<div class="container">
+	<%= form_tag(controller: "member", action: "book_submit", method: "post", class: "form-group") do %>
+		<%= date_field(:booking, :day) %>
+		<%= time_field(:booking, :start) %>
+		<%= time_field(:booking, :end ) %>
+		<%= select_tag(:room_id, options_for_select(@available_rooms)) %>
+
+		<%= submit_tag("Book") %>
+	<% end %>
+</div>
+
+

@@ -6,10 +6,10 @@ class Member < ApplicationRecord
 		sqlQuery = "SELECT * FROM Members WHERE MemberID = #{id};"
 		begin  
   			ActiveRecord::Base.transaction do
-				results = ActiveRecord::Base.connection.execute(sqlQuery)
+				results = ActiveRecord::Base.connection.exec_query(sqlQuery)
   			end
  		rescue Exception => exc
-   			return exc;
+   			raise exc;
  		end
  		return results.first
 	end
@@ -20,25 +20,37 @@ class Member < ApplicationRecord
 		sqlQuery = "SELECT * FROM Members WHERE Email = \'#{email}\';"
 		begin  
   			ActiveRecord::Base.transaction do
-				results = ActiveRecord::Base.connection.execute(sqlQuery)
+				results = ActiveRecord::Base.connection.exec_query(sqlQuery)
   			end
  		rescue Exception => exc
-   			return exc;
+   			raise exc;
  		end
  		return results.first
 	end
 
-	#TODO create and edit should have their respective params
+	def self.login(email, password)
+		results = nil
+		sqlQuery = "SELECT * FROM Members WHERE Email = \'#{email}\' AND MPassword = \'#{password}\';"
+		begin  
+  			ActiveRecord::Base.transaction do
+				results = ActiveRecord::Base.connection.exec_query(sqlQuery)
+  			end
+ 		rescue Exception => exc
+   			raise exc;
+ 		end
+ 		return results.first
+	end
+
 	def self.create(mname, phonenum, email, mpassword)
 		results = nil
 		sqlQuery = "INSERT INTO Members (MName, PhoneNum, Email, MPassword) VALUE " 
 		sqlQuery = sqlQuery + "(\'#{mname}\', \'#{phonenum}\', \'#{email}\', \'#{mpassword}\');"
 		begin
   			ActiveRecord::Base.transaction do
-				results = ActiveRecord::Base.connection.execute(sqlQuery)
+				results = ActiveRecord::Base.connection.exec_query(sqlQuery)
   			end
  		rescue Exception => exc
-   			return exc;
+   			raise exc;
  		end
  		return results
 	end
@@ -76,10 +88,10 @@ class Member < ApplicationRecord
 
 		begin  
   			ActiveRecord::Base.transaction do
-				results = ActiveRecord::Base.connection.execute(sqlQuery)
+				results = ActiveRecord::Base.connection.exec_query(sqlQuery)
   			end
  		rescue Exception => exc
-   			return exc;
+   			raise exc;
  		end
  		return results
 	end
@@ -90,10 +102,10 @@ class Member < ApplicationRecord
 
 		begin  
   			ActiveRecord::Base.transaction do
-				results = ActiveRecord::Base.connection.execute(sqlQuery)
+				results = ActiveRecord::Base.connection.exec_query(sqlQuery)
   			end
  		rescue Exception => exc
-   			return exc;
+   			raise exc;
  		end
  		return results
  	end

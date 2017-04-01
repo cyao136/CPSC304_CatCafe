@@ -6,10 +6,10 @@ class Item < ApplicationRecord\
         sqlQuery = "SELECT * FROM Items WHERE ItemID = #{id};"
         begin
             ActiveRecord::Base.transaction do
-				results = ActiveRecord::Base.connection.execute(sqlQuery)
+				results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results.first
     end
@@ -21,10 +21,10 @@ class Item < ApplicationRecord\
         sqlQuery = "SELECT * FROM Items WHERE Name = \'" + iname + "\';"
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results.first
     end
@@ -36,10 +36,10 @@ class Item < ApplicationRecord\
         sqlQuery = sqlQuery + "(\'#{iname}\', \'#{price}\');"
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results
     end
@@ -63,10 +63,10 @@ class Item < ApplicationRecord\
 
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results
     end
@@ -77,10 +77,10 @@ class Item < ApplicationRecord\
 
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results
     end

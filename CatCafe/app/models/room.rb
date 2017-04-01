@@ -6,14 +6,26 @@ class Room < ApplicationRecord
         sqlQuery = "SELECT * FROM rooms WHERE RoomID = #{id};"
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results.first
     end
 
+    def self.availableRooms()
+        results = nil
+        sqlQuery = "SELECT * FROM rooms;"
+        begin
+            ActiveRecord::Base.transaction do
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
+            end
+        rescue Exception => exc
+            raise exc;
+        end
+        return results
+    end
 =begin
     # Find room with status
     def self.findByStatus(status)
@@ -21,10 +33,10 @@ class Room < ApplicationRecord
         sqlQuery = "SELECT * FROM Rooms WHERE Status = \'" + status + "\';"
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results
     end
@@ -36,10 +48,10 @@ class Room < ApplicationRecord
         sqlQuery = sqlQuery + "(#{status});"
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results
     end
@@ -56,10 +68,10 @@ class Room < ApplicationRecord
 
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results
     end
@@ -70,10 +82,10 @@ class Room < ApplicationRecord
 
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results
     end

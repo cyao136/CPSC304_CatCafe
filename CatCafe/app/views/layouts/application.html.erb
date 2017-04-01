@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>CatCafe</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+	<head>
+	  <title>CatCafe</title>
+	  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+	  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+	  <%= csrf_meta_tags %>
+	</head>
+	<body>
+		<div class="container" id="app_header">
+	        <%= render 'layouts/header' %>
+	    </div>
+	    
+  		<% flash.each do |key, value| %>
+    		<div class="alert alert-<%= key %>"><%= value %></div>
+  		<% end %>
 
-<%= yield %>
+		<%= yield %>
 
-</body>
+		<div class="container" id="app_footer">
+	        <%= render 'layouts/footer' %>
+	    </div>
+	</body>
 </html>

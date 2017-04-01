@@ -7,10 +7,23 @@ class Employee < ApplicationRecord
         sqlQuery = "SELECT * FROM Employees WHERE EmployeeID = #{id};"
         begin
             ActiveRecord::Base.transaction do
-				results = ActiveRecord::Base.connection.execute(sqlQuery)
+				results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
+        end
+        return results.first
+    end
+
+    def self.login(id, password)
+        results = nil
+        sqlQuery = "SELECT * FROM Employees WHERE EmployeeID = \'#{id}\' AND EPassword = \'#{password}\';"
+        begin  
+            ActiveRecord::Base.transaction do
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
+            end
+        rescue Exception => exc
+            raise exc;
         end
         return results.first
     end
@@ -21,12 +34,12 @@ class Employee < ApplicationRecord
         
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
             rescue Exception => exc
-            return exc;
+            raise exc;
         end
-        return !results.first.empty?
+        return !results.empty?
     end
 
     def self.create(ename, epassword)
@@ -35,10 +48,10 @@ class Employee < ApplicationRecord
         sqlQuery = sqlQuery + "(\'#{ename}\', \'(epassword)\');"
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results
     end
@@ -62,10 +75,10 @@ class Employee < ApplicationRecord
 
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results
     end
@@ -76,10 +89,10 @@ class Employee < ApplicationRecord
 
         begin
             ActiveRecord::Base.transaction do
-                results = ActiveRecord::Base.connection.execute(sqlQuery)
+                results = ActiveRecord::Base.connection.exec_query(sqlQuery)
             end
         rescue Exception => exc
-            return exc;
+            raise exc;
         end
         return results
     end
